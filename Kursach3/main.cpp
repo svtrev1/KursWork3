@@ -1,104 +1,229 @@
 #include <iostream>
 #include <list>
+#include <utility>
+#include <functional>
+
 
 using namespace std;
-
+template <typename K, typename V>
 class HashTable {
 
-public: 
-    
-    static const int tableSize = 10; // Размер хеш-таблицы
-    list<pair<int, string>> table[tableSize]; // Массив для хранения пар ключ-значение
-    
 private:
+    
+    static const int tableSize = 500; // Размер хеш-таблицы
+    
+    list<pair<K, V>> table[tableSize]; // Массив для хранения пар ключ-значение
+    
+public:
+    
     int hashFunction(int key)
     {
         return key % tableSize; // Простая хеш-функция (остаток от деления)
     }
+    int hashFunction(string key)
+    {
+        char * s = const_cast<char*>(key.c_str());
+        int h = 0, a = 127;
+        for (int i = 0; i < key.length() / 2; i++)
+            h = (a * h + s[i]) % tableSize;
+        return abs(h);
+    }
+    int hashFunction(double key)
+    {
+        size_t hash = 0;
+            const char* ptr = reinterpret_cast<const char*>(&key);
+            for (size_t i = 0; i < sizeof(double); ++i)
+            {
+                hash = hash * 31 + static_cast<size_t>(*ptr++);
+            }
+            return hash % tableSize;
 
-public:
-    
-    void insertItem(int key, string value)
+    }
+
+    void insertItem(K key, V value)
     {
         int index = hashFunction(key);
+        for (auto& pair : table[index]) 
+        {
+            if (pair.first == key)
+            {
+                pair.second = value; // Обновление значения, так как ключ уже существует
+                return;
+            }
+        }
         table[index].push_back(make_pair(key, value));
     }
 
-    void removeItem(int key) {
+    void removeItem(K key) 
+    {
         int index = hashFunction(key);
-       list<pair<int, string>>& bucket = table[index];
+        list<pair<K, V>>& temp = table[index];
 
-        for (auto it = bucket.begin(); it != bucket.end(); ++it) {
+        for (auto it = temp.begin(); it != temp.end(); it++) {
             if (it->first == key) {
-                bucket.erase(it);
+                temp.erase(it);
                 break;
             }
         }
     }
 
-    string searchItem(int key) {
+    V searchItem(K key) {
         int index = hashFunction(key);
         for (const auto& pair : table[index]) {
             if (pair.first == key) {
                 return pair.second;
             }
         }
-        return "Key not found";
+        cout << "Key not found";
+        V A;
+        return A;
     }
-};
-
-class Dictionary {
-private:
-    HashTable hashTable; // Используем нашу реализацию хеш-таблицы как часть словаря
-
-public:
-    void insertItem(int key, string value) {
-        hashTable.insertItem(key, value);
-    }
-
-    void removeItem(int key) {
-        hashTable.removeItem(key);
-    }
-
-    string searchItem(int key) {
-        return hashTable.searchItem(key);
-    }
-
-    void printDictionary() {
-        for (int i = 0; i < HashTable::tableSize; ++i) {
-            for (const auto& pair : hashTable.table[i]) {
+    
+    void printTable()
+    {
+        for (int i = 0; i < tableSize; i++)
+        {
+            for (const auto &pair : table[i])
+            {
                 cout << "Key: " << pair.first << ", Value: " << pair.second << endl;
             }
         }
     }
+};
+template <typename K, typename V>
+class Dictionary {
+private:
+    HashTable<K, V> hashTable; // Используем нашу реализацию хеш-таблицы как часть словаря
 
-    bool containsKey(int key) {
-        string result = hashTable.searchItem(key);
-        return result != "Key not found";
+public:
+    void insertItem(K key, V value) 
+    {
+        hashTable.insertItem(key, value);
     }
+
+    void removeItem(K key) 
+    {
+        hashTable.removeItem(key);
+    }
+
+    V searchItem(K key)
+    {
+        return hashTable.searchItem(key);
+    }
+
+    void printDictionary() 
+    {
+        hashTable.printTable();
+    }
+
+    
 };
 
-int main() {
-    Dictionary myDictionary;
+int main() 
+{
+    Dictionary<int, string> IntString;
 
-    // Добавление элементов
-    myDictionary.insertItem(1, "Apple");
-    myDictionary.insertItem(2, "Banana");
-    myDictionary.insertItem(3, "Cherry");
-    myDictionary.insertItem(4, "Date");
+    IntString.insertItem(1, "A");
+    IntString.insertItem(2, "B");
+    IntString.insertItem(3, "C");
+    IntString.insertItem(4, "D");
+    IntString.insertItem(2, "B2");
+    
+    cout << "IntString before remove:" << endl;
+    IntString.printDictionary();
+    
+    cout << endl;
+    
+    cout << "Element with key 89: " << IntString.searchItem(89) << endl;
+    
+    cout << "Element with key 3: " << IntString.searchItem(3) << endl;
+    IntString.removeItem(3);
 
-    // Поиск элемента
-    cout << "Element with key 2: " << myDictionary.searchItem(7) << endl;
+    cout << endl;
 
-    // Удаление элемента
-    myDictionary.removeItem(3);
+    cout << "IntString after remove:" << endl;
+    IntString.printDictionary();
 
-    // Проверка наличия элемента
-    cout << "Contains key 3: " << (myDictionary.containsKey(3) ? "Yes" : "No") << endl;
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    
+    
+    
+    Dictionary<int, double> IntDouble;
 
-    // Распечатать все элементы
-    cout << "Dictionary contents:" << endl;
-    myDictionary.printDictionary();
+    IntDouble.insertItem(1, 3.27);
+    IntDouble.insertItem(2, 10.28);
+    IntDouble.insertItem(3, 5.00);
+    IntDouble.insertItem(4, 4.63);
+    
+    cout << "IntDouble before remove:" << endl;
+    IntDouble.printDictionary();
+    
+    cout << endl;
+    
+    cout << "Element with key 78: " << IntDouble.searchItem(78) << endl;
+    cout << "Element with key 3: " << IntDouble.searchItem(3) << endl;
+    IntDouble.removeItem(3);
 
+    cout << endl;
+
+    cout << "IntDouble after remove:" << endl;
+    IntDouble.printDictionary();
+
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    
+    Dictionary<string, double> StringDouble;
+
+    StringDouble.insertItem("Владимир", 3.27);
+    StringDouble.insertItem("Родион", 10.28);
+    StringDouble.insertItem("Евгений", 5.00);
+    StringDouble.insertItem("Илоночка", 4.63);
+    
+    cout << "StringDouble before remove:" << endl;
+    StringDouble.printDictionary();
+    
+    cout << endl;
+    
+    cout << "Element with key Лолошка: " << StringDouble.searchItem("Лолошка") << endl;
+    cout << "Element with key Евгений: " << StringDouble.searchItem("Евгений") << endl;
+    StringDouble.removeItem("Евгений");
+
+    cout << endl;
+
+    cout << "StringDouble after remove:" << endl;
+    StringDouble.printDictionary();
+
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    
+    Dictionary<string, string> StringString;
+
+    StringString.insertItem("Привет", "Hello");
+    StringString.insertItem("Пока", "By");
+    StringString.insertItem("Как дела?", "How are you?");
+    StringString.insertItem("Сколько тебе лет?", "How old are you?");
+    
+    cout << "StringString before remove:" << endl;
+    StringString.printDictionary();
+    
+    cout << endl;
+    
+    cout << "Element with key Нет, Value: " << StringString.searchItem("Нет") << endl;
+    cout << "Element with key Пока, Value: " << StringString.searchItem("Пока") << endl;
+    StringString.removeItem("Пока");
+
+    cout << endl;
+
+    cout << "StringString after remove:" << endl;
+    StringString.printDictionary();
+
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    
     return 0;
 }
