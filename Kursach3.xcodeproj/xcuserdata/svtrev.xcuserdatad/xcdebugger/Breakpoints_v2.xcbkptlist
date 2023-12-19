@@ -3,4 +3,84 @@
    uuid = "E1E4C426-0D37-43F2-ADAD-EAF35A124651"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9DCF513E-765D-4DD9-8BD9-15498FA3D3D3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Kursach3/main.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "295"
+            endingLineNumber = "295"
+            landmarkName = "main()"
+            landmarkType = "9">
+            <Locations>
+               <Location
+                  uuid = "9DCF513E-765D-4DD9-8BD9-15498FA3D3D3 - 680b00db1483530d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "main"
+                  moduleName = "Kursach3"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/svtrev/Desktop/%D0%90%D0%B8%D0%A1%D0%94/Kursach3/Kursach3/main.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "281"
+                  endingLineNumber = "281"
+                  offsetFromSymbolStart = "376">
+               </Location>
+               <Location
+                  uuid = "9DCF513E-765D-4DD9-8BD9-15498FA3D3D3 - 680b00db148353ae"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "main"
+                  moduleName = "Kursach3"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/svtrev/Desktop/%D0%90%D0%B8%D0%A1%D0%94/Kursach3/Kursach3/main.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "284"
+                  endingLineNumber = "284"
+                  offsetFromSymbolStart = "364">
+               </Location>
+               <Location
+                  uuid = "9DCF513E-765D-4DD9-8BD9-15498FA3D3D3 - 680b00db14835389"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "main"
+                  moduleName = "Kursach3"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/svtrev/Desktop/%D0%90%D0%B8%D0%A1%D0%94/Kursach3/Kursach3/main.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "285"
+                  endingLineNumber = "285"
+                  offsetFromSymbolStart = "364">
+               </Location>
+               <Location
+                  uuid = "9DCF513E-765D-4DD9-8BD9-15498FA3D3D3 - 680b00db14835389"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "main"
+                  moduleName = "Kursach3"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/svtrev/Desktop/%D0%90%D0%B8%D0%A1%D0%94/Kursach3/Kursach3/main.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "285"
+                  endingLineNumber = "285"
+                  offsetFromSymbolStart = "1432">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
