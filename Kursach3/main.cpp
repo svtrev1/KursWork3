@@ -1,8 +1,6 @@
 #include <iostream>
 #include <list>
 #include <utility>
-#include <functional>
-
 
 using namespace std;
 template <typename K, typename V>
@@ -30,14 +28,9 @@ public:
     }
     int hashFunction(double key)
     {
-        size_t hash = 0;
-            const char* ptr = reinterpret_cast<const char*>(&key);
-            for (size_t i = 0; i < sizeof(double); ++i)
-            {
-                hash = hash * 31 + static_cast<size_t>(*ptr++);
-            }
-            return hash % tableSize;
-
+        long long intKey = *(long long *)&key; // Преобразуем double в long long (64 бита)
+        int h = (int)(intKey % tableSize);
+        return h; // Используем остаток от деления в качестве хеша
     }
 
     void insertItem(K key, V value)
@@ -150,12 +143,12 @@ int main()
     
     
     
-    Dictionary<int, double> IntDouble;
+    Dictionary<double, double> IntDouble;
 
-    IntDouble.insertItem(1, 3.27);
-    IntDouble.insertItem(2, 10.28);
-    IntDouble.insertItem(3, 5.00);
-    IntDouble.insertItem(4, 4.63);
+    IntDouble.insertItem(1.1, 3.27);
+    IntDouble.insertItem(2.12, 10.28);
+    IntDouble.insertItem(3.13, 5.00);
+    IntDouble.insertItem(4.15, 4.63);
     
     cout << "IntDouble before remove:" << endl;
     IntDouble.printDictionary();
@@ -163,7 +156,7 @@ int main()
     cout << endl;
     
     cout << "Element with key 78: " << IntDouble.searchItem(78) << endl;
-    cout << "Element with key 3: " << IntDouble.searchItem(3) << endl;
+    cout << "Element with key 3: " << IntDouble.searchItem(3.13) << endl;
     IntDouble.removeItem(3);
 
     cout << endl;
